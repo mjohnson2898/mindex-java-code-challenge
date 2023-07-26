@@ -1,8 +1,5 @@
 package com.mindex.challenge.data;
 
-import lombok.Data;
-
-@Data
 public class ReportingStructure {
 
     private Employee employee;
@@ -13,5 +10,19 @@ public class ReportingStructure {
 
     }
 
+    public Employee getEmployee() {
+        return employee;
+    }
 
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
+    public int getNumberOfReports() {
+        return numberOfReports;
+    }
+
+    public void setNumberOfReports(int numberOfReports) {
+        this.numberOfReports = numberOfReports;
+    }
 }

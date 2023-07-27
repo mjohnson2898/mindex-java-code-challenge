@@ -55,32 +55,110 @@ The Employee has a JSON schema of:
 ```
 For all endpoints that require an "id" in the URL, this is the "employeeId" field.
 
-## What to Implement
-Clone or download the repository, do not fork it.
+## New Endponts Created
 
-### Task 1
-Create a new type, ReportingStructure, that has two properties: employee and numberOfReports.
+### ReportingStructure
 
-For the field "numberOfReports", this should equal the total number of reports under a given employee. The number of 
-reports is determined to be the number of directReports for an employee and all of their distinct reports. For example, 
-given the following employee structure:
+#### Endpoints
+
 ```
-                    John Lennon
-                /               \
-         Paul McCartney         Ringo Starr
-                               /        \
-                          Pete Best     George Harrison
+* getReport
+  * HTTP Method: GET
+  * URL: localhost:8080/report/{id}
+  * Response: ReportingStructure
 ```
-The numberOfReports for employee John Lennon (employeeId: 16a596ae-edd3-4847-99fe-c4518e82c86f) would be equal to 4. 
+For the endpoint, "id" refers to an "employeeId"
 
-This new type should have a new REST endpoint created for it. This new endpoint should accept an employeeId and return 
-the fully filled out ReportingStructure for the specified employeeId. The values should be computed on the fly and will 
-not be persisted.
+The ReportingStructure has a JSON schema of:
 
-### Task 2
-Create a new type, Compensation. A Compensation has the following fields: employee, salary, and effectiveDate. Create 
-two new Compensation REST endpoints. One to create and one to read by employeeId. These should persist and query the 
-Compensation from the persistence layer.
+```json
+{
+  "type" : "ReportingStructure",
+  "properties" : {
+    "employee": {
+      "type": "Employee",
+      "properties" : {
+        "employeeId": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "position": {
+          "type": "string"
+        },
+        "department": {
+          "type": "string"
+        },
+        "directReports": {
+          "type": "array",
+          "items" : "string"
+        }
+      }
+    },
+    "numberOfReports": {
+      "type": "int"
+    }
+  }
+}
+```
 
-## Delivery
-Please upload your results to a publicly accessible Git repo. Free ones are provided by Github and Bitbucket.
+### Compensation
+
+#### Endpoints
+
+```
+* CREATE
+    * HTTP Method: POST
+    * URL: localhost:8080/compensation
+    * Payload: Compensation
+    * Response: Compensation
+* READ
+    * HTTP Method: GET
+    * URL: localhost:8080/compensation/{id}
+    * Response: Compensation
+```
+For all endpoints that require an "id" in the URL, this is the "employeeId" field.
+
+Compensation has a JSON Schema of:
+```json
+{
+  "type" : "Compensation",
+  "properties" : {
+    "employee": {
+      "type": "Employee",
+      "properties" : {
+        "employeeId": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "position": {
+          "type": "string"
+        },
+        "department": {
+          "type": "string"
+        },
+        "directReports": {
+          "type": "array",
+          "items" : "string"
+        }
+      }
+    },
+    "salary": {
+      "type": "long"
+    },
+    "effectiveDate" : {
+      "type" : "Date"
+    }
+  }
+}
+```
+For effectiveDate, the value has the format of yyyy-MM-dd
